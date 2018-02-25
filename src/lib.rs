@@ -3,6 +3,7 @@ extern crate serde;
 extern crate serde_json;
 #[macro_use] extern crate serde_derive;
 
+
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -75,7 +76,38 @@ impl Xel {
 
 #[test]
 fn test_init() { /// cargo test -- --nocapture to use println! in test
-    let xel = Xel::from_file("./src/example/invader.json".to_string());
-    println!("{:?}", xel);
+    //let xel = Xel::from_file("./src/example/invader.json".to_string());
+    //println!("{:?}", xel);
+    println!("hoge");
 
+}
+
+#[test]
+fn test_decode() {
+    let js = r#"{
+  "width": 11,
+  "height": 8,
+  "dots": [
+    ["Black", "Black", "None"],
+    ["Black", "Black", "None"]
+  ]
+}"#;
+        let _v: Xel = serde_json::from_str(js).unwrap();
+    println!("{:?}", js);
+}
+
+
+#[test]
+#[should_panic] // for now
+fn test_decode_from_primitive() {
+    let js = r#"{
+  "width": 11,
+  "height": 8,
+  "dots": [
+    ["0", 1, 2, 3],
+    [2, 3, 4, 5]
+  ]
+}"#;
+        let _v: Xel = serde_json::from_str(js).unwrap();
+    println!("{:?}", js);
 }
