@@ -5,30 +5,23 @@
 <script>
 import * as THREE from 'three'
 import * as oc from 'three-orbit-controls'
+
+import * as Model from '~/components/models/Grass.js'
 export default {
   name: 'World',
   data () {
     // TODO: OrbitController
     // const OrbitControls = oc(THREE)
-    const textures = [
-      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass.png")}),
-      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
-      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
-      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
-      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
-      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
-    ]
-
     const width = 500
     const height = 1000
     const scene = new THREE.Scene();
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
     const light = new THREE.DirectionalLight(0xffffff);
-    const geometry = new THREE.BoxGeometry(50, 50, 50);
-    const material = new THREE.MeshBasicMaterial({ color: 0x2f2f2f })
     const grid = new THREE.GridHelper( 5000, 100 )
-    const cube = new THREE.Mesh(geometry, textures)
+    // const cube = new THREE.Mesh(geometry, material)
+    console.log(Model)
+    const cube = Model.cube()
 
     /*
     const geom = new THREE.PlaneBufferGeometry( 1000, 1000)
@@ -67,6 +60,7 @@ export default {
     this.scene.add(this.light)
     this.scene.add(this.cube)
     this.scene.add(this.grid)
+    this.cube.position.set(10, 0, -5)
     // this.control = new OrbitControls(this.camera)
   },
   methods: {
