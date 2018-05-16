@@ -45,6 +45,7 @@ export default {
       cube,
       cursor,
       objects,
+      isShiftDown: false
     }
   },
   mounted () {
@@ -80,21 +81,38 @@ export default {
     },
     onKeyDown (e) {
       console.log('onkeydown')
+      switch (e.keyCode) {
+        case 16: this.isShiftDown = true; break;
+      }
     },
     onKeyUp (e) {
       console.log('onkeyup')
+      switch (e.keyCode) {
+        case 16: this.isShiftDown = false; break;
+      }
     },
     onMouseDown (e) {
       e.preventDefault()
       this.cursor.set((e.clientX / this.width) * 2 - 1, -(e.clientY / this.height) * 2 + 1)
       this.raycaster.setFromCamera( this.cursor, this.camera )
       const is = this.raycaster.intersectObjects( this.objects )
-      if (is.length > 0) { var i = is[0] }
-      const vox = Model.cube()
-      vox.position.copy(i.point).add(i.face.normal)
-      vox.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25)
-      this.scene.add(vox)
-      this.objects.push(vox)
+      if (is.length > 0) { 
+          const i = is[0]
+        if ( this.isShiftDown) { // remove
+          // TODO: remove blicks by long click
+          if (i.object != this.base) {
+            this.scene.remove(i.object)
+            this.objects.splice(this.objects.indexOf(i.object), 1)
+          }
+
+        } else { // create
+          const vox = Model.cube()
+          vox.position.copy(i.point).add(i.face.normal)
+          vox.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25)
+          this.scene.add(vox)
+          this.objects.push(vox)
+        }
+      }
     },
     onMouseMove (e) {
 
