@@ -1,4 +1,3 @@
-import * as THREE from 'three'
 export function cube() {
   const textures = [
     new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass.png")}),
@@ -9,8 +8,17 @@ export function cube() {
     new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
   ]
 
-  const geometry = new THREE.BoxGeometry(50, 50, 50);
-  const material = new THREE.MeshBasicMaterial({ color: 0x2f2f2f })
+  const t_g = [
+    new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass.png")}),
+    new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass.png")}),
+    new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass.png")}),
+    new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass.png")}),
+    new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass.png")}),
+    new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass.png")})
+  ]
 
-  return new THREE.Mesh(geometry, material)
+  const geometry = new THREE.BoxGeometry(50, 50, 50);
+  const material = new THREE.MeshBasicMaterial({ color: 0xb8bb26, wireframe: true })
+
+  return new THREE.Mesh(geometry, t_g)
 }
