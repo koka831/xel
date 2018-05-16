@@ -8,7 +8,10 @@
         <input class="width" type="number" v-model="width" />
         <input class="height" type="number" v-model="height" />
         <no-ssr placeholder="Loading...">
-          <picker v-model="color"></picker>
+          <picker-small v-model="color"></picker-small>
+        </no-ssr>
+        <no-ssr placeholder="Loading...">
+          <picker-large v-model="color"></picker-large>
         </no-ssr>
         <no-ssr placeholder="Loading...">
           <material-picker v-model="color"></material-picker>
@@ -35,7 +38,7 @@
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
-import { Swatches, Material } from 'vue-color'
+import { Compact, Swatches, Material } from 'vue-color'
 
 let defaultColor = {
   hex: '#EBEDF0',
@@ -69,7 +72,8 @@ for (let y = 0; y < 16; y++) {
 export default {
   components: {
     AppLogo,
-    'picker': Swatches,
+    'picker-large': Swatches,
+    'picker-small': Compact,
     'material-picker': Material
   },
   data() {
@@ -84,6 +88,9 @@ export default {
   methods: {
     click: function (j, k) {
       // NOTE: Vue cannot detect any changes in array
+      // TODO: reset color only when didnt change color
+      // color changed => override
+      // color unchanged -> reset
       this.$set(this.colors[j], k, this.status[j][k] ? defaultColor['hex'] : this.color['hex'])
       this.$set(this.status[j], k, !this.status[j][k])
     }
