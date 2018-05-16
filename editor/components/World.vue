@@ -10,16 +10,25 @@ export default {
   data () {
     // TODO: OrbitController
     // const OrbitControls = oc(THREE)
+    const textures = [
+      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass.png")}),
+      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
+      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
+      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
+      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
+      new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load("/grass_dirt.png")}),
+    ]
+
     const width = 500
     const height = 1000
     const scene = new THREE.Scene();
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
     const light = new THREE.DirectionalLight(0xffffff);
-    const geometry = new THREE.BoxGeometry(100, 100, 100);
-    const material = new THREE.MeshStandardMaterial({ color: 0x00ff00, opacity: 0.5, transparent: true });
-    const grid = new THREE.GridHelper( 5000, 20 )
-    const cube = new THREE.Mesh(geometry, material)
+    const geometry = new THREE.BoxGeometry(50, 50, 50);
+    const material = new THREE.MeshBasicMaterial({ color: 0x2f2f2f })
+    const grid = new THREE.GridHelper( 5000, 100 )
+    const cube = new THREE.Mesh(geometry, textures)
 
     /*
     const geom = new THREE.PlaneBufferGeometry( 1000, 1000)
@@ -32,7 +41,7 @@ export default {
     scene.background = new THREE.Color( 0xf0f0f0 )
     camera.position.set( 500, 800, 1000 )
     camera.lookAt( new THREE.Vector3() )
-    light.position.set(0, 0, 10)
+    light.position.set(0, 10, 10)
 
     return {
       width: width,
@@ -58,14 +67,13 @@ export default {
     this.scene.add(this.light)
     this.scene.add(this.cube)
     this.scene.add(this.grid)
-    this.scene.add(this.axis)
     // this.control = new OrbitControls(this.camera)
   },
   methods: {
     animate () {
       requestAnimationFrame(this.animate)
-      this.cube.rotation.x += 0.05
-      this.cube.rotation.y += 0.05
+      // this.cube.rotation.x += 0.05
+      // this.cube.rotation.y += 0.05
 
       this.renderer.render(this.scene, this.camera)
     }
@@ -73,7 +81,7 @@ export default {
   updated () {
     const world = document.getElementById('world')
     world.appendChild(this.renderer.domElement)
-    this.animate()
+    // this.animate()
   }
 }
 </script>
